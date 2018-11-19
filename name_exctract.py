@@ -1,3 +1,6 @@
+'''
+人名或公司名提取
+'''
 import csv
 def extract_data_save_to_txt():
     with open('legal_datas2.csv','r',encoding='UTF-8') as csvfile:
@@ -26,7 +29,6 @@ def extract_data_save_to_txt():
             else:
                 print('有关： ',content.strip())
                 name_list.append(content.strip())
-
         else:
             content = i
             if  'v.' in content:
@@ -54,10 +56,35 @@ def extract_data_save_to_txt():
             txtfile.write(str(j)+'\n')
         txtfile.close()
 
-def extract_data_from_txt():
+
+def extract_name_max_num_from_txt():
     with open('name1.txt','r',encoding='utf-8') as r:
         result = r.readlines()
         print(result)
         print(type(result))
         print(max(result,key=result.count))
-extract_data_from_txt()
+
+def extract_data_save_to_txt1(args,filename):
+    with open('name1.txt','r',encoding='utf-8') as r:
+        result = r.readlines()
+        for name in result:
+            if args in name:
+                name_list = name.split(args)
+                for i in name_list:
+                    print(i)
+                    with open(filename, 'a', encoding='utf-8')as w:
+                        if name_list.index(i) == len(name_list)-1:
+                            w.write(str(i))
+                        else:
+                            w.write(str(i) + '\n')
+
+                        w.close()
+            else:
+                with open(filename, 'a', encoding='utf-8')as w:
+                    print(name)
+                    w.write(str(name))
+                    w.close()
+
+extract_data_save_to_txt1(' AND ','name_no_and.txt')
+
+# extract_name_max_num_from_txt()
